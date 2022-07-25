@@ -15,10 +15,10 @@ class MYButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width:330.0,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        color: Colors.blue,
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        color: Colors.lightGreen,
       ),
       child: MaterialButton(
         onPressed: () {

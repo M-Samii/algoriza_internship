@@ -3,9 +3,10 @@ import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intern_program/my_button.dart';
-import 'package:intern_program/my_formFiled.dart';
-import 'package:intern_program/register_screen.dart';
+
+import '../../login/my_button.dart';
+import '../../login/register_screen.dart';
+
 
 class SignIN extends StatelessWidget {
   TextEditingController numberController = TextEditingController();

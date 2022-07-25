@@ -1,10 +1,14 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:intern_program/my_button.dart';
-import 'package:intern_program/register_screen.dart';
-import 'package:intern_program/sign_in_screen.dart';
+
+
 import 'package:onboarding/onboarding.dart';
+
+import '../../login/my_button.dart';
+import '../../login/register_screen.dart';
+
+
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -150,7 +154,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         left: Radius.circular(50), right: Radius.circular(50))),
                 child: TextButton(
                     onPressed: () {
-                      Navigator.push(context,MaterialPageRoute(builder:  (context) => SignIN() ));
+                     // Navigator.push(context,MaterialPageRoute(builder:  (context) => SignIN() ));
                     },
                     child: Text(
                       "Skip",
@@ -210,7 +214,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: MYButton(
                         text: 'Get Strated',
                         OnClick: (){
-                          Navigator.push(context,MaterialPageRoute(builder:  (context) => SignIN() ));
+                         // Navigator.push(context,MaterialPageRoute(builder:  (context) => SignIN() ));
                         },
                       ),
                     ),
