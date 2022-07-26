@@ -3,6 +3,8 @@ import 'package:intern_program/login/sign_in_screen.dart';
 
 import 'layout/Home_layout.dart';
 import 'login/onBording.dart';
+import 'modules/AddTaskScreen/AddTaskScreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +31,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomeLayout(),
+     // home: HomeLayout(),
+      home: AddTaskScreen(),
     );
   }
 }

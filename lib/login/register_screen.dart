@@ -119,7 +119,8 @@ class _register_screenState extends State<register_screen> {
               padding: const EdgeInsets.all(15.0),
               child: MyFormfield(
                 Control: EmailController,
-                validation: 'Email must not be empty',
+                validation: 'Email must not be empty', Onpress: () {  },
+
               ),
             ),
             Padding(
@@ -186,7 +187,7 @@ class _register_screenState extends State<register_screen> {
               child: MyFormfield(
                 Control: PasswordController,
                 validation: 'password must not be empty',
-                isPassword: true,
+                isPassword: true, Onpress: () {  },
               ),
             ),
             Padding(

@@ -21,7 +21,9 @@ class AllTaskScreen extends StatelessWidget {
          ),
         SizedBox(height: 500,),
 
-        MYButton(OnClick:(){},text: 'Add a task' ,),
+        MYButton(OnClick:(){
+
+        },text: 'Add a task' ,),
       ],
     );
   }
