@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-     // home: HomeLayout(),
-      home: AddTaskScreen(),
+     home: HomeLayout(),
+    //  home: AddTaskScreen(),
      // home: ScheduleScreen(),
     );
   }

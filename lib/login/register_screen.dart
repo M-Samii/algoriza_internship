@@ -4,8 +4,8 @@ import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../login/my_button.dart';
-import '../../login/my_formFiled.dart';
+import '../Component/my_button.dart';
+import '../Component/my_formFiled.dart';
 
 
 class register_screen extends StatefulWidget {

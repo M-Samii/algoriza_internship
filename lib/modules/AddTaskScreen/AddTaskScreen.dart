@@ -1,9 +1,11 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sqflite/sqflite.dart';
 
-import '../../login/my_button.dart';
-import '../../login/my_formFiled.dart';
+import '../../Component/Constants.dart';
+import '../../Component/my_button.dart';
+import '../../Component/my_formFiled.dart';
 class AddTaskScreen extends StatefulWidget {
 
    AddTaskScreen({Key? key}) : super(key: key);
@@ -13,6 +15,15 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
+  Database? database;
+
+  @override
+  void initState(){
+    createDatabase();
+
+    //  insertToDatabase();
+
+  }
   final List<String> RemindItems = ["1 day before", "1 hour before", "30 min before", "10 min before"];
   final List<String> RepeatItems = ["daily", "weekly",];
 
@@ -39,7 +50,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         elevation: 0.0,
         backgroundColor: Colors.white,
         title: Text(
-          '  Add task',
+          'Add task',
           style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
       ),
       body: SingleChildScrollView(
@@ -83,7 +94,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               child: MyFormfield(
                 Control: DateController,
                 hint: '2021-02-28',
-                validation: 'date must not be empty', Onpress: () {
+                validation: 'date must not be empty',
+                readonly: true,
+                Onpress: () {
 
                 showDatePicker(
                     context: context,
@@ -107,12 +120,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
             Row(
               children: [
-                SizedBox(width: 20,),
+                SizedBox(width: 15,),
                 Text('Start Time',style: TextStyle(
                     fontSize: 10,
                     color: Colors.black,
                     fontWeight: FontWeight.bold)),
-                SizedBox(width: 100,),
+                SizedBox(width: 115.0,),
                 Text('End Time',style: TextStyle(
                     fontSize: 10,
                     color: Colors.black,
@@ -130,10 +143,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
               Padding(
-                padding: const EdgeInsets.only(top: 15,bottom: 15,left: 17),
+                padding: const EdgeInsets.only(top: 15,bottom: 15,left: 17,right: 10),
                 child: Container(
                   width: 150,
                   child: MyFormfield(
+                    readonly: true,
                     hint: '11:00 AM',
                     Control: StartTimeController, validation: 'must not be empty', Onpress: ()
                   async {
@@ -157,6 +171,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 child: Container(
                   width: 150,
                   child: MyFormfield(
+                    readonly: true,
                     hint: '1:00 PM',
                     Control: EndTimeController, validation: 'must not be empty', Onpress: ()
                   async {
@@ -317,13 +332,78 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MYButton(OnClick:(){
+                insertToDatabase(startTime: StartTimeController.text , date: DateController.text, title: TitleController.text, endTime: EndTimeController.text , Reminder: _selectedRemindItems.toString(), repeate: _selectedRepeatItems.toString());
 
               },text: 'Create a task' ,),
             ),
+           /* MYButton(text: 'get', OnClick: (){
+              getDataFromDatabase(database);
+              print(list.length);
+            })*/
+
 
 
         ],),
       ),
     );
   }
+  void createDatabase()async
+  {
+    database = await openDatabase(
+      'todo.db',
+      version: 1,
+      onCreate: (database, version) async
+      {
+        print('database created');
+        database.execute('CREATE TABLE tasks (id INTEGER PRIMARY KEY,title TEXT,date TEXT,startTime TEXT,endTime TEXT,Reminder TEXT, repeate TEXT)').then((value) {
+          print('table created');
+        }).catchError((error){
+          print('error when creating table ${error.toString()}');
+        });
+
+      },
+      onOpen: (database)
+      {
+        print('database opend');
+        getDataFromDatabase(database);
+
+      },
+
+    );
+  }
+
+  Future insertToDatabase({
+    required String title,
+    required String date,
+    required String startTime,
+    required String endTime,
+    required String Reminder,
+    required String repeate,
+  })
+  async {
+    /* await database.transaction((txn)
+    {
+      txn.rawInsert('INSERT INTO tasks(title, date, startTime, endTime, Reminder, repeate) VALUES("first task","0022","12","1","yes","daily")').then((value){print('$value inserted successfully');}).catchError((error){
+        print('error when insertion new record  ${error.toString()}');
+      });
+
+    });*/
+    return await database!.transaction((txn) async {
+      int? id1 = await txn.rawInsert(
+          'INSERT INTO tasks(title, date, startTime, endTime, Reminder, repeate) VALUES("$title","$date","$startTime","$endTime","$Reminder","$repeate")').then((value){print('$value inserted successfully');}).catchError((error){
+        print('error when insertion new record  ${error.toString()}');
+      });
+
+    });
+
+
+  }
+  Future<List<Map>> getDataFromDatabase(database)async{
+   // List<Map> list = await database!.rawQuery('SELECT * FROM tasks WHERE ID = 21');
+     list = await database!.rawQuery('SELECT * FROM tasks');
+    print(list);
+    return list;
+
+  }
+
 }

@@ -5,6 +5,7 @@ class MyFormfield extends StatelessWidget {
   final String validation;
   final String hint;
   final bool isPassword;
+  final bool readonly;
   final VoidCallback Onpress;
 
   const MyFormfield({
@@ -13,7 +14,7 @@ class MyFormfield extends StatelessWidget {
     required this.validation,
     this.isPassword=false,
     required this.Onpress,
-     this.hint='',
+     this.hint='',  this.readonly=false,
 
 
   }) : super(key: key);
@@ -41,6 +42,7 @@ class MyFormfield extends StatelessWidget {
         onTap: (){
           Onpress();
         },
+        readOnly: readonly,
         decoration:InputDecoration(
 
 

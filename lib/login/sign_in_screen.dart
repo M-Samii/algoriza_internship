@@ -4,7 +4,7 @@ import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../login/my_button.dart';
+import '../Component/my_button.dart';
 import '../../login/register_screen.dart';
 
 

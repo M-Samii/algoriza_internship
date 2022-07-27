@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intern_program/modules/HomeScreen/FavoriteScreen.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../modules/AddTaskScreen/AddTaskScreen.dart';
 import '../modules/HomeScreen/AllTaskScreen.dart';
 import '../modules/HomeScreen/CompletedScreen.dart';
 import '../modules/HomeScreen/UncompletedScreen.dart';
@@ -19,7 +20,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   void initState(){
-    createDatabase();
+    //createDatabase();
   //  insertToDatabase();
 
   }
@@ -81,11 +82,37 @@ class _HomeLayoutState extends State<HomeLayout> {
               ]
 
           ),
-        floatingActionButton: FloatingActionButton(onPressed: () async {
-          insertToDatabase();
-         List<Map> list = await database!.rawQuery('SELECT * FROM tasks WHERE ID = 15');
-          print(list);
-        },),
+        floatingActionButton: Container(
+          width: 330,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            color: Colors.lightGreen,
+          ),
+          child: FloatingActionButton.extended(
+            elevation: 0.0,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddTaskScreen(),
+                  ));
+            },
+
+
+            label: const Text('Add a task'),
+            backgroundColor: Colors.lightGreen,
+          ),
+        ),
+       /* floatingActionButton: FloatingActionButton(onPressed: () async {
+          //insertToDatabase();
+        /* List<Map> list = await database!.rawQuery('SELECT * FROM tasks WHERE ID = 21');
+          print(list);*/
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddTaskScreen(),
+              ));
+        },),*/
 
 
 
@@ -98,7 +125,7 @@ class _HomeLayoutState extends State<HomeLayout> {
     );
   }
 
-  void createDatabase()async
+/*  void createDatabase()async
   {
    database = await openDatabase(
         'todo.db',
@@ -121,8 +148,15 @@ class _HomeLayoutState extends State<HomeLayout> {
 
       );
   }
-
-  void insertToDatabase()
+*/
+  Future insertToDatabase({
+  required String title,
+  required String date,
+  required String startTime,
+  required String endTime,
+  required String Reminder,
+  required String repeate,
+})
   async {
    /* await database.transaction((txn)
     {
@@ -131,9 +165,9 @@ class _HomeLayoutState extends State<HomeLayout> {
       });
 
     });*/
-    await database!.transaction((txn) async {
+    return await database!.transaction((txn) async {
       int? id1 = await txn.rawInsert(
-          'INSERT INTO tasks(title, date, startTime, endTime, Reminder, repeate) VALUES("zzz task","0022","12","1","yes","daily")').then((value){print('$value inserted successfully');}).catchError((error){
+          'INSERT INTO tasks(title, date, startTime, endTime, Reminder, repeate) VALUES("$title","$date","$startTime","$endTime","$Reminder","$repeate")').then((value){print('$value inserted successfully');}).catchError((error){
         print('error when insertion new record  ${error.toString()}');
       });
 
