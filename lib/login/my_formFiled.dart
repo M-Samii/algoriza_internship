@@ -31,6 +31,7 @@ class MyFormfield extends StatelessWidget {
 
         ),
       ),*/
+
       child: TextFormField(
 
 
@@ -41,11 +42,15 @@ class MyFormfield extends StatelessWidget {
           Onpress();
         },
         decoration:InputDecoration(
+
+
+
           hintText:hint,
           hintStyle: TextStyle(color: Colors.grey[400],fontSize: 10.0,),
           border:OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(color: Colors.grey[400]!),
+
           ),
         ) ,
         controller: Control,

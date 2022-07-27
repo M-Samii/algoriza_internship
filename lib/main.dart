@@ -4,6 +4,7 @@ import 'package:intern_program/login/sign_in_screen.dart';
 import 'layout/Home_layout.dart';
 import 'login/onBording.dart';
 import 'modules/AddTaskScreen/AddTaskScreen.dart';
+import 'modules/ScheduleScreen/ScheduleScreen.dart';
 
 
 void main() {
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       ),
      // home: HomeLayout(),
       home: AddTaskScreen(),
+     // home: ScheduleScreen(),
     );
   }
 }
