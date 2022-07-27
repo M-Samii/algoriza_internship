@@ -1,5 +1,7 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_program/login/sign_in_screen.dart';
+import 'package:intern_program/shared/block_observer.dart';
 
 import 'layout/Home_layout.dart';
 import 'login/onBording.dart';
@@ -8,6 +10,13 @@ import 'modules/ScheduleScreen/ScheduleScreen.dart';
 
 
 void main() {
+  BlocOverrides.runZoned(
+        () {
+      // Use cubits...
+    },
+    blocObserver: MyBlocObserver(),
+
+  );
   runApp(const MyApp());
 }
 

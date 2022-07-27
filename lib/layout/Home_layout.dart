@@ -6,6 +6,7 @@ import '../modules/AddTaskScreen/AddTaskScreen.dart';
 import '../modules/HomeScreen/AllTaskScreen.dart';
 import '../modules/HomeScreen/CompletedScreen.dart';
 import '../modules/HomeScreen/UncompletedScreen.dart';
+import '../modules/ScheduleScreen/ScheduleScreen.dart';
 
 
 class HomeLayout extends StatefulWidget {
@@ -39,7 +40,14 @@ class _HomeLayoutState extends State<HomeLayout> {
           actions: [
             IconButton(onPressed: (){}, icon:Icon(Icons.search, color: Colors.black,)),
             IconButton(onPressed: (){}, icon:Icon(Icons.notifications_active , color: Colors.black,)),
-            IconButton(onPressed: (){}, icon:Icon(Icons.menu , color: Colors.black,)),
+            IconButton(onPressed: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+
+                    builder: (context) => ScheduleScreen(),
+                  ));
+            }, icon:Icon(Icons.menu , color: Colors.black,)),
           ],
           bottom: TabBar(
             labelColor: Colors.black,

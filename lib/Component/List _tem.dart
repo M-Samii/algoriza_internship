@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ListItemToDO extends StatelessWidget {
+class ListItemToDO extends StatefulWidget {
  // final String text;
    Map? model;
+
   ListItemToDO(  {Key? key, /*required this.text */required this.model,}) : super(key: key);
+
+  @override
+  State<ListItemToDO> createState() => _ListItemToDOState();
+}
+
+class _ListItemToDOState extends State<ListItemToDO> {
+   IconData ico =Icons.check_box_outline_blank;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +28,16 @@ class ListItemToDO extends StatelessWidget {
         ),
         child: Row(
           children: [
-            IconButton(onPressed: (){}, icon: Icon(Icons.check_box_outline_blank),),
+            IconButton(onPressed: (){
+              setState(() {
+                if (ico==Icons.check_box_outline_blank)
+                  ico=Icons.check_box;
+                else
+                 ico= Icons.check_box_outline_blank;
+              });
+            }, icon: Icon(ico),),
             Text(
-              model?['title'],
+              widget.model?['title'],
               style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.bold),
