@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intern_program/modules/HomeScreen/FavoriteScreen.dart';
+import 'package:intern_program/shared/cubit/cubit.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../modules/AddTaskScreen/AddTaskScreen.dart';
@@ -7,131 +8,131 @@ import '../modules/HomeScreen/AllTaskScreen.dart';
 import '../modules/HomeScreen/CompletedScreen.dart';
 import '../modules/HomeScreen/UncompletedScreen.dart';
 import '../modules/ScheduleScreen/ScheduleScreen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
+import 'package:intern_program/shared/cubit/states.dart';
 
+class HomeLayout extends StatelessWidget {
+  Database? database;
 
-class HomeLayout extends StatefulWidget {
-  const HomeLayout({Key? key}) : super(key: key);
-
-  @override
-  State<HomeLayout> createState() => _HomeLayoutState();
-}
-
-class _HomeLayoutState extends State<HomeLayout> {
-   Database? database;
-
-  @override
-  void initState(){
-    //createDatabase();
-  //  insertToDatabase();
-
-  }
 
   Widget build(BuildContext context) {
 
-    return DefaultTabController(
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.5,
-          title: Text(
-            '  Board',
-            style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.white,
-          actions: [
-            IconButton(onPressed: (){}, icon:Icon(Icons.search, color: Colors.black,)),
-            IconButton(onPressed: (){}, icon:Icon(Icons.notifications_active , color: Colors.black,)),
-            IconButton(onPressed: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
+    return BlocProvider(
+      create: (BuildContext context) => AppCubit(),
+      child: BlocConsumer<AppCubit,AppStates>(
+        listener:(BuildContext context,AppStates state){},
+        builder:(BuildContext context,AppStates state) {
+         return DefaultTabController(
+            child: Scaffold(
+              appBar: AppBar(
+                elevation: 0.5,
+                title: Text(
+                  '  Board',
+                  style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                ),
+                backgroundColor: Colors.white,
+                actions: [
+                  IconButton(onPressed: (){}, icon:Icon(Icons.search, color: Colors.black,)),
+                  IconButton(onPressed: (){}, icon:Icon(Icons.notifications_active , color: Colors.black,)),
+                  IconButton(onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
 
-                    builder: (context) => ScheduleScreen(),
-                  ));
-            }, icon:Icon(Icons.menu , color: Colors.black,)),
-          ],
-          bottom: TabBar(
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey,
-            labelStyle: TextStyle(fontSize: 10.0,
-            fontWeight: FontWeight.bold,
-            ),
-            indicatorColor: Colors.black,
-            indicator: UnderlineTabIndicator(
-                borderSide: BorderSide(width: 2.0),
-                insets: EdgeInsets.symmetric(horizontal:35.0)),
-            labelPadding: EdgeInsets.only(right: 10,left: 10),
+                          builder: (context) => ScheduleScreen(),
+                        ));
+                  }, icon:Icon(Icons.menu , color: Colors.black,)),
+                ],
+                bottom: TabBar(
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  labelStyle: TextStyle(fontSize: 10.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  indicatorColor: Colors.black,
+                  indicator: UnderlineTabIndicator(
+                      borderSide: BorderSide(width: 2.0),
+                      insets: EdgeInsets.symmetric(horizontal:35.0)),
+                  labelPadding: EdgeInsets.only(right: 10,left: 10),
 
 
-            tabs: <Widget>[
-              Tab(
-                text: 'All',
+                  tabs: <Widget>[
+                    Tab(
+                      text: 'All',
+
+                    ),
+                    Tab(
+                      text: 'Completed',
+                    ),
+                    Tab(
+                      text: 'Uncompleted',
+                    ),
+                    Tab(
+                      text: 'Favorites',
+                    ),
+                  ],
+                ),
 
               ),
-              Tab(
-                text: 'Completed',
-              ),
-              Tab(
-                text: 'Uncompleted',
-              ),
-              Tab(
-                text: 'Favorites',
-              ),
-            ],
-          ),
 
-        ),
+              body: TabBarView(
+                  children: <Widget>[
+                    AllTaskScreen(),
+                    CompletedScreen(),
+                    UncompletedScreen(),
+                    FavoriteScreen(),
+                  ]
 
-        body: TabBarView(
-              children: <Widget>[
-                AllTaskScreen(),
-                CompletedScreen(),
-                UncompletedScreen(),
-                FavoriteScreen(),
-              ]
+              ),
+              floatingActionButton: Container(
+                width: 330,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  color: Colors.lightGreen,
+                ),
+                child: FloatingActionButton.extended(
+                  elevation: 0.0,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddTaskScreen(),
+                        ));
+                  },
 
-          ),
-        floatingActionButton: Container(
-          width: 330,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-            color: Colors.lightGreen,
-          ),
-          child: FloatingActionButton.extended(
-            elevation: 0.0,
-            onPressed: () {
+
+                  label: const Text('Add a task'),
+                  backgroundColor: Colors.lightGreen,
+                ),
+              ),
+              /* floatingActionButton: FloatingActionButton(onPressed: () async {
+              //insertToDatabase();
+            /* List<Map> list = await database!.rawQuery('SELECT * FROM tasks WHERE ID = 21');
+              print(list);*/
               Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddTaskScreen(),
                   ));
-            },
-
-
-            label: const Text('Add a task'),
-            backgroundColor: Colors.lightGreen,
-          ),
-        ),
-       /* floatingActionButton: FloatingActionButton(onPressed: () async {
-          //insertToDatabase();
-        /* List<Map> list = await database!.rawQuery('SELECT * FROM tasks WHERE ID = 21');
-          print(list);*/
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddTaskScreen(),
-              ));
-        },),*/
+            },),*/
 
 
 
 
 
+
+            ),
+            length: 4,
+            initialIndex: 0,
+          );
+        },
 
       ),
-      length: 4,
-      initialIndex: 0,
     );
-  }
+}
+
+
 
 /*  void createDatabase()async
   {
