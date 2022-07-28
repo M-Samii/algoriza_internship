@@ -11,7 +11,7 @@ import '../AddTaskScreen/AddTaskScreen.dart';
 class AllTaskScreen extends StatelessWidget {
 
   const AllTaskScreen({Key? key}) : super(key: key);
-//neeeed to be edit
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppStates>(
